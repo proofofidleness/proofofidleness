@@ -58,7 +58,7 @@
             console.log("Proof of Idleness");
         
             var Web3 = require('web3');
-            web3 = new Web3(new Web3.providers.HttpProvider("https://rpc.ethapi.org"));
+            web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/Qir3ptaP61BSwrAGIjmy"));
                
             
             var lp = {}
@@ -82,9 +82,9 @@
                             lp[e.args.a] = 0;
                         }
                     }
+                    refresh();
                 });
                 
-                refresh();
             }
 
             function interpolate(v, rgb1, rgb2) {
