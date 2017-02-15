@@ -71,17 +71,18 @@
                 
                 console.log("Start watching.");
                 
-                events.watch(function(error, e){  
-                    if (e.event == "Pinged") {
-                        console.log("Pinged " + e.args.a + " " + e.args.time)
-                        lp[e.args.a] = e.args.time;
+                events.get(function(error, logs){  
+                    for (var i in logs) {
+                        var e = logs[i];
+                        if (e.event == "Pinged") {
+                            console.log("Pinged " + e.args.a + " " + e.args.time)
+                            lp[e.args.a] = e.args.time;
+                        }
+                        else {
+                            console.log("Eliminated " + e.args.a)
+                            lp[e.args.a] = 0;
+                        }
                     }
-                    else {
-                        console.log("Eliminated " + e.args.a)
-                        lp[e.args.a] = 0;
-                    }
-                    
-                    refresh();
                 })
             }
 
