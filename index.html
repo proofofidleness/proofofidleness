@@ -48,8 +48,7 @@
         </table>
         
         
-        <button type="button" onClick="watchEvents();">Watch</button>
-        <button type="button" onClick="refresh();">Refresh</button>
+        <button type="button" onClick="watchEvents();">Refresh</button>
         
 
         <script type="text/javascript" src="web3.min.js"></script>
@@ -83,7 +82,9 @@
                             lp[e.args.a] = 0;
                         }
                     }
-                })
+                });
+                
+                refresh();
             }
 
             function interpolate(v, rgb1, rgb2) {
