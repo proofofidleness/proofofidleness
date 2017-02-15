@@ -49,6 +49,7 @@
         
         
         <button type="button" onClick="refresh();">Refresh</button>
+        <button type="button" onClick="watch();">Watch</button>
         
 
         <script type="text/javascript" src="web3.min.js"></script>
@@ -71,18 +72,21 @@
             console.log("Current block: " + web3.eth.blockNumber);
             
             var lp = {}
-            events.watch(function(error, e){  
-                if (e.event == "Pinged") {
-                    console.log("Pinged " + e.args.a + " " + e.args.time)
-                    lp[e.args.a] = e.args.time;
-                }
-                else {
-                    console.log("Eliminated " + e.args.a)
-                    lp[e.args.a] = 0;
-                }
-                
-                refresh();
-            })
+            
+            function watch() {
+                events.watch(function(error, e){  
+                    if (e.event == "Pinged") {
+                        console.log("Pinged " + e.args.a + " " + e.args.time)
+                        lp[e.args.a] = e.args.time;
+                    }
+                    else {
+                        console.log("Eliminated " + e.args.a)
+                        lp[e.args.a] = 0;
+                    }
+                    
+                    refresh();
+                })
+            }
 
             function interpolate(v, rgb1, rgb2) {
                 var rgb = [0,0,0];
