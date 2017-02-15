@@ -61,6 +61,7 @@
             web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io"));
             
             console.log("Proof of Idleness");
+            console.log(web3);
                 
             var inst = web3.eth.contract([{"constant":false,"inputs":[{"name":"a","type":"address"}],"name":"eliminate","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"idle","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"lastPing","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"countRemaining","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"organizer","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"join","outputs":[],"payable":true,"type":"function"},{"constant":false,"inputs":[],"name":"claimReward","outputs":[],"payable":false,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"a","type":"address"}],"name":"Eliminated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"a","type":"address"},{"indexed":false,"name":"time","type":"uint256"}],"name":"Pinged","type":"event"}]).at("0x019d7e5ae8d2ba9a292244311dc7355058ab1b08")
             var events = inst.allEvents({fromBlock: 0, toBlock: 'latest'});
