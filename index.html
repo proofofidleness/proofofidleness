@@ -61,8 +61,13 @@
             console.log("Proof of Idleness");
         
             var Web3 = require('web3');
-            web3 = new Web3(new Web3.providers.HttpProvider());
-               
+            
+            if (typeof web3 !== 'undefined') {
+                web3 = new Web3(web3.currentProvider);
+            } else {
+                console.log("Connecting to Infura");
+                web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io"));
+            }
             
             var lp = {}
             
