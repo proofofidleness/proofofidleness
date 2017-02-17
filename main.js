@@ -3,7 +3,6 @@ console.log("Proof of Idleness");
 
 
 var lp = {};
-var web3;
 
 function initialize() {
         
