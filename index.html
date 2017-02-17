@@ -31,7 +31,7 @@
         </style>
     </head>
 
-    <body>
+    <body onload="watchEvents()">
         <h1> Proof of Idleness </h1>
         
         <table id="data-table">
@@ -47,9 +47,6 @@
             </tbody>
         </table>
         
-        
-        <button type="button" onClick="watchEvents();">Refresh</button>
-        
 
         <script type="text/javascript" src="web3.min.js"></script>
         <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
@@ -58,7 +55,7 @@
             console.log("Proof of Idleness");
         
             var Web3 = require('web3');
-            web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io"));
+            web3 = new Web3(new Web3.providers.HttpProvider());
                
             
             var lp = {}
@@ -70,17 +67,14 @@
                 
                 console.log("Start watching.");
                 
-                events.get(function(error, logs){  
-                    for (var i in logs) {
-                        var e = logs[i];
-                        if (e.event == "Pinged") {
-                            console.log("Pinged " + e.args.a + " " + e.args.time)
-                            lp[e.args.a] = e.args.time;
-                        }
-                        else {
-                            console.log("Eliminated " + e.args.a)
-                            lp[e.args.a] = 0;
-                        }
+                events.watch(function(error, e){  
+                    if (e.event == "Pinged") {
+                        console.log("Pinged " + e.args.a + " " + e.args.time)
+                        lp[e.args.a] = e.args.time;
+                    }
+                    else {
+                        console.log("Eliminated " + e.args.a)
+                        lp[e.args.a] = 0;
                     }
                     refresh();
                 });
@@ -99,8 +93,8 @@
             }
             
             function color(hoursAgo) {
-                var red = [255,100,100]
-                var green = [100,255,100]
+                var red = [255,60,60]
+                var green = [60,255,60]
                 var rgb = interpolate(hoursAgo / 27, green, red)
                 return "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")";
             }
@@ -109,7 +103,11 @@
                 $("#data-table tbody tr").remove(); 
                 var now = new Date().getTime() / 1000
                 
-                for (var acc in lp) {
+                var addresses = Object.keys(lp);
+                addresses.sort(function(a,b) { lp[a] - lp[b] }).reverse();
+
+                for (var i=0; i < addresses.length; i++) {
+                    var acc = addresses[i];
                     if (lp[acc] != 0) {
                         var hoursAgo = ((now-lp[acc]) / 3600).toFixed(2)
                         console.log(acc + " \t" + lp[acc] + " \t(" + hoursAgo + " hours ago)" );
